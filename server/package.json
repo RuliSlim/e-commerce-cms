@@ -8,8 +8,9 @@
   },
   "scripts": {
     "create:db": "npx sequelize db:create",
-    "migrate": "npx sequelize db:migrate && npx sequelize db:seed:all",
-    "migrate:reset": "npx sequelize db:migrate:undo:all && npm run migrate",
+    "create:db:test": "npx sequelize db:create --env=test",
+    "migrate": "npx sequelize db:migrate --env=test && npx sequelize db:seed:all --env=test",
+    "migrate:reset": "npx sequelize db:migrate:undo:all --env=test && npm run migrate --env=test",
     "test": "jest --watchAll",
     "pretest": "npm run migrate:reset"
   },
