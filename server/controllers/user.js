@@ -13,7 +13,7 @@ class UserController {
   }
 
   static login(req, res, next) {
-    console.log('masuk ga')
+    // console.log('masuk ga')
     const { email, password } = req.body;
     User.findOne({where: {email}})
       .then(user => {

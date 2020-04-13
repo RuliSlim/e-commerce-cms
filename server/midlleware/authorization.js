@@ -1,9 +1,15 @@
-const { decodeToken } = require('../helpers/jwt');
-const { User }        = require('../models');
+const ErrorCustom  = require('./errorHandler');
+
 
 const authAdmin = (req, res, next) => {
   try {
-    if(req.user.role !== 'admin' || !req.user) throw new Error('Access denied');
+    if(req.user.role !== 'admin') {
+      throw new ErrorCustom({
+        name: 'TokenInvalid',
+        status: 401,
+        message: 'Access denied!'
+      });
+    }
     next();
   } catch(err) {
     next(err);
