@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.0.2",
+    "sequelize": "^5.21.6"
+  },
+  "devDependencies": {
+    "jest": "^25.3.0",
+    "sequelize-cli": "^5.5.1",
+    "supertest": "^4.0.2"
+  }
+}
