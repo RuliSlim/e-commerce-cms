@@ -20,13 +20,13 @@ class ErrorCustom extends Error {
       // console.error(err);
       switch (err.name) {
           case 'SequelizeValidationError':
-              res.status(400).json(err.message || err);
+              res.status(400).json({message: err.message} || err);
               break;
           case "JsonWebTokenError":
               res.status(401).json({message: err.message} || {message: err.Error} || err);
               break;
           default:
-              res.status(err.status || 500).json({message: err.message} || err || 'Internal Server Error');
+              res.status(err.status || 500).json({message: err.message} || err || {message: 'Internal Server Error'});
               break;
       }
   }

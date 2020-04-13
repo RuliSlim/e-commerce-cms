@@ -1,5 +1,5 @@
-const { User }          = require('../models');
 const uuid              = require('uuid/v4');
+const { User }          = require('../models');
 const {signToken}         = require('../helpers/jwt');
 const {comparePassword}   = require('../helpers/bcrypt');
 
