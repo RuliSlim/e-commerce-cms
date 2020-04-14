@@ -14,35 +14,34 @@ const routes = [
     name: 'HomePage',
     component: HomePage,
     beforeEnter: (to, from, next) => {
-      if(localStorage.getItem('access_token')) {
+      // if(localStorage.getItem('access_token')) {
         let role = localStorage.getItem('role');
         if (role === 'admin') {
-          next({
-            path: '/dashboard'
-          });
+          next('/dashboard');
         } else {
-          next({
-            path: '/'
-          });
+          next();
         };
-      };
+      // };
     }
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    children: [
+      
+    ],
     beforeEnter: (to, from, next) => {
-      if(localStorage.getItem('access_token')) {
+      // if(localStorage.getItem('access_token')) {
         let role = localStorage.getItem('role');
         if(role === 'admin') {
           next();
-        } else {
+        } else if (!role) {
           next({
             path: '/'
           });
         };
-      };
+      // };
     }
   }
 ]
