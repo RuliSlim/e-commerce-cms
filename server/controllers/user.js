@@ -8,8 +8,10 @@ class UserController {
     const { email, password, name } = req.body;
     User.create({id: uuid(), email, password, name})
       .then((user) => {
-        res.json({id: user.id, role: user.role})
+        const token = signToken(user);
+        res.status(201).json({access_token: token, role: user.role})
       })
+      .catch(err => next(err));
   }
 
   static login(req, res, next) {
@@ -22,6 +24,7 @@ class UserController {
         const token = signToken(user);
         res.status(200).json({ access_token: token, role: user.role });
       })
+      .catch(err => next(err));
   }
 }
 

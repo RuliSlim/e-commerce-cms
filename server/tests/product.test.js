@@ -1,6 +1,9 @@
+
 const {app}     = require('../app');
 const supertest = require('supertest');
 const request   = supertest(app);
+const { sequelize } = require('../models');
+const { queryInterface } = sequelize;
 
 const newProduct = {
   name: 'Product1',
@@ -27,8 +30,6 @@ const customer = {
   token: null
 }
 
-let token = null
-
 describe('Product routing', () => {
   beforeAll((done) => {
     return request
@@ -50,7 +51,7 @@ describe('Product routing', () => {
         customer.token = response.body.access_token;
         done();
       })
-  });
+    });
 
   // with token
   describe('POST /products', () => {
@@ -70,7 +71,6 @@ describe('Product routing', () => {
   })
 
   // without token
-  // describe('Acces denied without token', () => {
     it('should Acces denied without token', (done) => {
       return request
       .post('/products')
@@ -82,38 +82,19 @@ describe('Product routing', () => {
           done();
         })
     })
-  // })
-  
-  // with role customer
-  // describe('Login with customer', () => {
-  //   beforeAll((done) => {
-  //     request
-  //       .post('/login')
-  //       .send({ email: 'email2@email.com', password: 'password' })
-  //       .end((err, response) => {
-  //         expect(response.status).toBe(200);
-  //         expect(response.body).toHaveProperty('access_token')
-  //         expect(response.body).toHaveProperty('role')
-  //         token = response.body.access_token;
-  //         done();
-  //       });
-  //     });
 
-    // describe('POST /products', () => {
-      it('should not create new Product', (done) => {
-        return request
-        .post('/products')
-        .set('access_token', customer.token)
-        .send(newProduct)
-        .then(response => {
-            const { body, status } = response;
-            expect(status).toBe(401);
-            expect(body).toHaveProperty('message', 'Access denied!');
-            done();
-          })
-      })
-    // })
-  // })
+    it('should not create new Product', (done) => {
+      return request
+      .post('/products')
+      .set('access_token', customer.token)
+      .send(newProduct)
+      .then(response => {
+          const { body, status } = response;
+          expect(status).toBe(401);
+          expect(body).toHaveProperty('message', 'Access denied!');
+          done();
+        })
+    })
 
   // getAll
   describe('GET /products', () => {
@@ -243,4 +224,14 @@ describe('Product routing', () => {
         })
     })
   })
+  // clean db
+  afterAll(done => {
+    queryInterface
+      .bulkDelete('Products', {})
+      .then(() => {
+        return queryInterface.bulkDelete('Users', {});
+      })
+      .then(() => done())
+      .catch(err => done(err))
+  });
 })

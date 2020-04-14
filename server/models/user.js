@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate: (user, option) => {
-        const hashedPassword = hashPassword(user.password);
+        const hashedPassword = hashPassword(user);
         user.password = hashedPassword;
       }
     }, sequelize
