@@ -50,7 +50,7 @@ describe('Product routing', () => {
         customer.token = response.body.access_token;
         done();
       })
-    });
+  });
 
   // with token
   describe('POST /products', () => {
