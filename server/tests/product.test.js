@@ -11,6 +11,12 @@ const newProduct = {
   price: 5000,
   stock: 10
 }
+const newProductNegative = {
+  name: 'Product1',
+  image: '',
+  price: -500,
+  stock: 10
+}
 const updateProduct = {
   name: 'Product5',
   image: '',
@@ -83,6 +89,7 @@ describe('Product routing', () => {
         })
     })
 
+    // role customer
     it('should not create new Product', (done) => {
       return request
       .post('/products')
@@ -92,6 +99,20 @@ describe('Product routing', () => {
           const { body, status } = response;
           expect(status).toBe(401);
           expect(body).toHaveProperty('message', 'Access denied!');
+          done();
+        })
+    })
+
+    // price negative
+    it('should not create new Product, price negative', (done) => {
+      return request
+      .post('/products')
+      .set('access_token', admin.token)
+      .send(newProductNegative)
+      .then(response => {
+          const { body, status } = response;
+          expect(status).toBe(400);
+          expect(body).toHaveProperty('message', 'Product price cannot be negative.');
           done();
         })
     })
