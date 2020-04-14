@@ -1,40 +1,56 @@
 <template>
-  <div class="page-container">
-    <md-app md-waterfall md-mode="fixed">
-      <md-app-toolbar class="md-primary">
-        <span class="md-title">My Title</span>
+    <b-navbar class="is-dark nav">
+        <template slot="brand">
+            <b-navbar-item tag="router-link" :to="{ path: '/' }">
+                <img
+                    src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
+                    alt="Lightweight UI components for Vue.js based on Bulma"
+                >
+            </b-navbar-item>
+        </template>
+        <template slot="start">
+            <b-navbar-item href="#">
+                Home
+            </b-navbar-item>
+            <b-navbar-item href="#">
+                Documentation
+            </b-navbar-item>
+            <b-navbar-dropdown label="Info">
+                <b-navbar-item href="#">
+                    About
+                </b-navbar-item>
+                <b-navbar-item href="#">
+                    Contact
+                </b-navbar-item>
+            </b-navbar-dropdown>
+        </template>
 
-        <!-- <div class="md-toolbar-row"> -->
-          <md-tabs class="md-primary">
-            <md-tab id="tab-home" md-label="Home"></md-tab>
-            <md-tab id="tab-pages" md-label="Products"></md-tab>
-            <md-tab id="tab-posts" md-label="Create Product"></md-tab>
-            <md-tab id="tab-favorites" md-label="Stats" @click="route"></md-tab>
-          </md-tabs>
-        <!-- </div> -->
-      </md-app-toolbar>
+        <template slot="end">
+          <User />
+        </template>
 
-
-
-    </md-app>
-  </div>
+    </b-navbar>
 </template>
 
 <script>
+import User from './User.vue';
+
 export default {
   name: 'Navbar',
+  components: {
+    User
+  },
   methods: {
     route() {
-      console.log('you')
       this.$router.push({ path: '/dashboard/create' })
     }
   }
 }
 </script>
 
-<style>
-  .navbar{
-    top: 0;
+<style scoped>
+  .nav{
+    margin-bottom: 70px;
   }
   /* .md-app {
     max-height: 400px;
