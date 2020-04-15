@@ -9,6 +9,7 @@ import CreateProduct from '../views/CreateProduct.vue';
 import Detail from '../views/Detail.vue';
 import Edit from '../views/Edit.vue';
 import Delete from '../views/Delete.vue';
+import Chart from '../views/Chart.vue';
 
 Vue.use(VueRouter);
 
@@ -42,6 +43,11 @@ const routes = [
       };
     },
     children: [
+      {
+        path: 'stats',
+        name: 'Chart',
+        component: Chart
+      },
       {
         path: 'create',
         name: 'CreateProduct',

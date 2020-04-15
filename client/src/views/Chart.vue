@@ -1,10 +1,17 @@
 <template>
-  
+  <div class="">
+    <h1>
+      Yo
+    </h1>
+    <line-chart/>
+  </div>
 </template>
 
 <script>
-export default {
+import LineChart from '../components/product/LineChart.vue'
 
+export default {
+  components: {'line-chart': LineChart}
 }
 </script>
 
@@ -12,18 +19,5 @@ export default {
 
 </style>
 
-  extends: VueChartJs.Line,
-  mounted () {
-    this.renderChart({
-      labels: ['January', 'February', 'March', 'Aprol', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'Data One',
-          backgroundColor: '#f87979',
-          data: [50, 39, 10, 40, 39, 80, 40]
-        }
-      ]
-    }, {responsive: true, maintainAspectRatio: false})
-  }
   
 })
