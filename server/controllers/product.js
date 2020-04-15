@@ -3,7 +3,7 @@ const ErrorCustom  = require('../midlleware/errorHandler');
 
 class ProductController {
   static getAll(req, res, next) {
-    console.log('yo')
+    console.log('masuk ga cuy?')
     Product.findAll()
       .then(products => {
         res.status(200).json(products);

@@ -7,6 +7,8 @@ import HomePage from '../views/HomePage.vue';
 import Dashboard from '../views/Dashboard.vue';
 import CreateProduct from '../views/CreateProduct.vue';
 import Detail from '../views/Detail.vue';
+import Edit from '../views/Edit.vue';
+import Delete from '../views/Delete.vue';
 
 Vue.use(VueRouter);
 
@@ -17,13 +19,9 @@ const routes = [
     name: 'HomePage',
     component: HomePage,
     beforeEnter: (to, from, next) => {
-      if(localStorage.getItem('access_token')) {
-        let role = store.state.role
-        if (role === 'admin') {
-          next('/dashboard');
-        } else {
-          next();
-        };
+      let role = store.state.role
+      if (role === 'admin') {
+        next('/dashboard');
       } else {
         next();
       };
@@ -34,17 +32,13 @@ const routes = [
     name: 'Dashboard',
     component: Dashboard,
     beforeEnter: (to, from, next) => {
-      if(localStorage.getItem('access_token')) {
-        let role = store.state.role
-        if(role === 'admin') {
-          next();
-        } else if (!role) {
-          next({
-            path: '/'
-          });
-        };
-      } else {
-        next({path: '/'});
+      let role = store.state.role
+      if(role === 'admin') {
+        next();
+      } else if (!role) {
+        next({
+          path: '/'
+        });
       };
     },
     children: [
@@ -57,7 +51,17 @@ const routes = [
         path: 'product/:id',
         name: 'Detail',
         component: Detail
-      }
+      },
+      {
+        path: 'product/:id/edit',
+        name: 'Edit',
+        component: Edit
+      },
+      {
+        path: 'product/:id/delete',
+        name: 'Delete',
+        component: Delete
+      },
     ]
   }
 ]

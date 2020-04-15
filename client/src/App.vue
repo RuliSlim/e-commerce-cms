@@ -21,6 +21,10 @@ export default {
 
     }
   },
+  created(){
+    this.$store.dispatch('getProducts')
+      // .then(() => )
+  },
   methods: {
 
   }

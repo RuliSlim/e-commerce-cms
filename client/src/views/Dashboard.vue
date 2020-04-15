@@ -18,9 +18,6 @@
             aria-previous-label="Previous page"
             aria-page-label="Page"
             aria-current-label="Current page"
-            :selected.sync="selected"
-            @click="getById"
-            focusable
             >
 
             <template slot-scope="props" label="Selected">
@@ -29,7 +26,10 @@
                 </b-table-column>
 
                 <b-table-column field="name" label="Name" sortable>
-                    {{ props.row.name }}
+                    <router-link :to="`/dashboard/product/${props.row.id}`">
+                        <!-- <b-button rounded @click="test">Edit</b-button> -->
+                        {{ props.row.name }}
+                    </router-link>
                 </b-table-column>
 
                 <b-table-column field="price" label="Price" sortable numeric >
@@ -45,6 +45,15 @@
                         {{ new Date(props.row.createdAt).toLocaleDateString() }}
                     </span>
                 </b-table-column>
+
+                <b-table-column field="option" label="Options" sortable numeric>
+                    <router-link :to="`/dashboard/product/${props.row.id}/edit`">
+                        <b-button rounded >Edit</b-button>
+                    </router-link>
+                    <router-link :to="`/dashboard/product/${props.row.id}/delete`">
+                        <b-button rounded >Delete</b-button>
+                    </router-link>
+                </b-table-column>
             </template>
             
         </b-table>
@@ -53,12 +62,11 @@
 </template>
 
 <script>
-
     export default {
         name: 'Dashboard',
         data() {
             return {
-                data: [],
+                // data: [],
                 isPaginated: true,
                 isPaginationSimple: true,
                 paginationPosition: 'top',
@@ -67,24 +75,18 @@
                 sortIconSize: 'is-small',
                 currentPage: 1,
                 perPage: 10,
-                url: 'http://localhost:3000/products',
+                // url: 'http://localhost:3000/products',
                 isShowAdd: false,
                 html: 'Add Product',
                 selected: null
             }
         },
-        mounted(){
-            this.$store.dispatch('getProducts')
-                .then(() => {
-                    // this.data = this.$store.state.products;
-                    // this.data = this.getData();
-                    this.getData
-                })
-                .catch(err => console.log(err));
-        },
         computed: {
-            getData() {
-                return this.data = this.$store.state.products
+            data() {
+                return this.$store.state.products
+            },
+            router() {
+                return this.$route
             }
         },
         methods: {
@@ -99,14 +101,9 @@
                 }
             },
             getById(baru, old) {
-                // alert('YO')
-                // console.log(this.selected)
-                // console.log(baru)
                 this.$router.push({ path: '/dashboard/product/' + baru.id });
-                // this.$router.push({ name: 'Detail' });
-                // console.log(this.$route)
-                // console.log(old)
-            }
+                this.selected = baru.id
+            },
         }
     }
 </script>

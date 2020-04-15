@@ -26,10 +26,13 @@ import ModalForm from './Modal.vue'
         },
         methods: {
           login(data) {
-            console.log(data, 'login com');
             this.$store.dispatch('login', data)
-                .then(() => this.$router.push({ path: 'dashboard' }))
-            // this.$emit('emitLogin', data)
+                .then(() => {
+                    let user = this.$store.state.user;
+                    this.$buefy.toast.open('Welcome ' + user);
+                    this.$router.push({ path: 'dashboard' });
+                })
+                .catch(err => this.$buefy.toast.open(err.response.statusText));
           }
         }
     }

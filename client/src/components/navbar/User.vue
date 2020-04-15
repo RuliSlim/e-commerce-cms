@@ -1,10 +1,15 @@
 <template>
-    <b-navbar-item tag="div">
-        <div class="buttons">
+    <b-navbar-item tag="div" >
+        <div class="buttons" v-if="!isLogin">
             <a class="button is-primary">
                 <strong>Sign up</strong>
             </a>
             <Login @emitLogin="login($event)"/>
+        </div>
+        <div class="buttons" v-else @click="logOut">
+            <a class="button is-primary" >
+                <strong>Logout</strong>
+            </a>
         </div>
     </b-navbar-item>
 </template>
@@ -17,10 +22,17 @@ export default {
     components: {
         Login
     },
+    computed: {
+        isLogin() {
+            return this.$store.state.isLogin
+        },
+    },
     methods: {
-        login(data) {
-            // localStorage.setItem('role', 'admin');
-            // this.$router.push({ path: 'dashboard' });
+        logOut() {
+            this.$store.dispatch('logOut')
+                .then((res) => this.$buefy.toast.open('Bye ' + res))
+                .catch(() => this.$buefy.toast.open(err.response.statusText));
+            this.$router.push('/');
         }
     }
 }
