@@ -1,42 +1,7 @@
 <template>
     <section class="container">
-        <b-field grouped group-multiline>
-            <b-select v-model="defaultSortDirection">
-                <option value="asc">Default sort direction: ASC</option>
-                <option value="desc">Default sort direction: DESC</option>
-            </b-select>
-            <b-select v-model="perPage" :disabled="!isPaginated">
-                <option value="5">5 per page</option>
-                <option value="10">10 per page</option>
-                <option value="15">15 per page</option>
-                <option value="20">20 per page</option>
-            </b-select>
-            <div class="control">
-                <button class="button" @click="currentPage = 2" :disabled="!isPaginated">Set page to 2</button>
-            </div>
-            <div class="control is-flex">
-                <b-switch v-model="isPaginated">Paginated</b-switch>
-            </div>
-            <div class="control is-flex">
-                <b-switch v-model="isPaginationSimple" :disabled="!isPaginated">Simple pagination</b-switch>
-            </div>
-            <b-select v-model="paginationPosition" :disabled="!isPaginated">
-                <option value="bottom">bottom pagination</option>
-                <option value="top">top pagination</option>
-                <option value="both">both</option>
-            </b-select>
-            <b-select v-model="sortIcon">
-                <option value="arrow-up">Arrow sort icon</option>
-                <option value="menu-up">Caret sort icon</option>
-                <option value="chevron-up">Chevron sort icon </option>
-            </b-select>
-            <b-select v-model="sortIconSize">
-                <option value="is-small">Small sort icon</option>
-                <option value="">Regular sort icon</option>
-                <option value="is-medium">Medium sort icon</option>
-                <option value="is-large">Large sort icon</option>
-            </b-select>
-        </b-field>
+        <b-button type="is-success" class="is-left" outlined
+         @click="showAdd">Add Product</b-button>
 
         <b-table
             :data="data"
@@ -76,50 +41,48 @@
                         {{ new Date(props.row.createdAt).toLocaleDateString() }}
                     </span>
                 </b-table-column>
-
-                <!-- <b-table-column label="Gender">
-                    <span>
-                        <b-icon pack="fas"
-                            :icon="props.row.gender === 'Male' ? 'mars' : 'venus'">
-                        </b-icon>
-                        {{ props.row.stock }}
-                    </span>
-                </b-table-column> -->
             </template>
+            
         </b-table>
+        <!-- <router-view> -->
     </section>
 </template>
 
 <script>
 
-const data = [
-  { 
-    "id": 1,
-    "name": "Product 1",
-    "image": "https://avatars1.githubusercontent.com/u/52574133?s=64&v=4",
-    "price": 100.000,
-    "stock": 100,
-    "createdAt": "2020-04-14T15:57:58.785Z",
-    "updatedAt": "2020-04-14T15:57:58.785Z"
-  }
-]
-
-
-
     export default {
         name: 'Dashboard',
         data() {
             return {
-                data,
+                data: [],
                 isPaginated: true,
-                isPaginationSimple: false,
-                paginationPosition: 'bottom',
+                isPaginationSimple: true,
+                paginationPosition: 'top',
                 defaultSortDirection: 'asc',
-                sortIcon: 'arrow-up',
+                sortIcon: 'chevron-up',
                 sortIconSize: 'is-small',
                 currentPage: 1,
-                perPage: 5
+                perPage: 10,
+                url: 'http://localhost:3000/products'
+            }
+        },
+        mounted(){
+            this.$store.dispatch('getProducts')
+                .then(() => {
+                    this.data = this.$store.state.products;
+                })
+                .catch(err => console.log(err));
+        },
+        methods: {
+            showAdd() {
+                this.$router.push({ path: '/create'})
             }
         }
     }
 </script>
+
+<style scoped>
+    .is-left {
+        float: left;
+    }
+</style>

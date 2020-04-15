@@ -22,17 +22,11 @@ export default {
   },
   data(){
     return {
-      role: null,
-      isLogin: false
+
     }
   },
   methods: {
-    loggedIn(){
-      this.role = 'admin'
-      this.isLogin = true
-      // this.$router.go('/dashboard')
-      this.$router.push({ path: 'dashboard' })
-    }
+
   }
 };
 </script>

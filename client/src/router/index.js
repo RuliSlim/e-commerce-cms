@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from '../store'
 
 // components
 import HomePage from '../views/HomePage.vue'
@@ -15,7 +16,7 @@ const routes = [
     component: HomePage,
     beforeEnter: (to, from, next) => {
       // if(localStorage.getItem('access_token')) {
-        let role = localStorage.getItem('role');
+        let role = store.state.role
         if (role === 'admin') {
           next('/dashboard');
         } else {
@@ -33,7 +34,7 @@ const routes = [
     ],
     beforeEnter: (to, from, next) => {
       // if(localStorage.getItem('access_token')) {
-        let role = localStorage.getItem('role');
+        let role = store.state.role
         if(role === 'admin') {
           next();
         } else if (!role) {

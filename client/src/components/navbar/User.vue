@@ -19,8 +19,8 @@ export default {
     },
     methods: {
         login(data) {
-            localStorage.setItem('role', 'admin');
-            this.$router.push({ path: 'dashboard' });
+            // localStorage.setItem('role', 'admin');
+            // this.$router.push({ path: 'dashboard' });
         }
     }
 }
