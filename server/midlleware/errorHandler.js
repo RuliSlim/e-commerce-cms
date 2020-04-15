@@ -17,7 +17,8 @@ class ErrorCustom extends Error {
   }
 
   static errorHandler(err, req, res, next) {
-    //   console.error(err);
+      console.error(err);
+    //   if()
       switch (err.name) {
           case 'SequelizeValidationError':
               res.status(400).json({message: err.message} || err);

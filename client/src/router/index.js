@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import store from '../store'
+import store from '../store';
 
 // components
-import HomePage from '../views/HomePage.vue'
-import Dashboard from '../views/Dashboard.vue'
+import HomePage from '../views/HomePage.vue';
+import Dashboard from '../views/Dashboard.vue';
+import CreateProduct from '../views/CreateProduct.vue';
+import Detail from '../views/Detail.vue';
 
 Vue.use(VueRouter);
 
@@ -15,25 +17,24 @@ const routes = [
     name: 'HomePage',
     component: HomePage,
     beforeEnter: (to, from, next) => {
-      // if(localStorage.getItem('access_token')) {
+      if(localStorage.getItem('access_token')) {
         let role = store.state.role
         if (role === 'admin') {
           next('/dashboard');
         } else {
           next();
         };
-      // };
+      } else {
+        next();
+      };
     }
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
-    children: [
-      
-    ],
     beforeEnter: (to, from, next) => {
-      // if(localStorage.getItem('access_token')) {
+      if(localStorage.getItem('access_token')) {
         let role = store.state.role
         if(role === 'admin') {
           next();
@@ -42,8 +43,22 @@ const routes = [
             path: '/'
           });
         };
-      // };
-    }
+      } else {
+        next({path: '/'});
+      };
+    },
+    children: [
+      {
+        path: 'create',
+        name: 'CreateProduct',
+        component: CreateProduct
+      },
+      {
+        path: 'product/:id',
+        name: 'Detail',
+        component: Detail
+      }
+    ]
   }
 ]
 

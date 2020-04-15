@@ -9,15 +9,11 @@
 </template>
 
 <script>
-import HomePage from './views/HomePage.vue';
-import Dashboard from './views/Dashboard.vue';
 import Navbar from './components/navbar/Navbar.vue';
 
 export default {
   name: 'App',
   components: {
-    HomePage,
-    Dashboard,
     Navbar
   },
   data(){
