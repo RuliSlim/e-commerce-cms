@@ -12,7 +12,8 @@
     "migrate": "npx sequelize db:migrate --env=test && npx sequelize db:seed:all --env=test",
     "migrate:reset": "npx sequelize db:migrate:undo:all --env=test && npm run migrate --env=test",
     "test": "jest --watchAll",
-    "pretest": "npm run migrate:reset"
+    "pretest": "npm run migrate:reset",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",

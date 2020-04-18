@@ -2,7 +2,7 @@ let config;
 
 if (process.env.NODE_ENV === "production") {
   config = {
-    $url: "",
+    $url: "https://cms-commerce.herokuapp.com",
   };
 } else {
   config = {
