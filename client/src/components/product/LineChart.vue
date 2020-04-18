@@ -3,6 +3,11 @@ import { Line } from 'vue-chartjs';
 
 export default {
   extends: Line,
+  computed: {
+    getData() {
+      return this.$store.state.totalSales
+    }
+  },
   mounted () {
     this.renderChart({
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -10,7 +15,7 @@ export default {
         {
           label: 'Data One',
           backgroundColor: '#f87979',
-          data: [40, 39, 10, 40, 39, 80, 40]
+          data: [this.getData, (this.getData-10), this.getData]
         }
       ]
     }, {responsive: true, maintainAspectRatio: false})

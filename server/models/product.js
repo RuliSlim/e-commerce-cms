@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     stock: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    sold: {
+      type: DataTypes.INTEGER,
     }
   }, {
     hooks: {
@@ -29,11 +32,13 @@ module.exports = (sequelize, DataTypes) => {
             message: 'Product price cannot be negative.'
           });
         }
+        product.sold = 0;
       }
     }
   });
   Product.associate = function(models) {
     // associations can be defined here
+    Product.hasMany(models.Sold);
   };
   return Product;
 };

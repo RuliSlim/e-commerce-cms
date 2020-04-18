@@ -9,20 +9,24 @@
             </b-navbar-item>
         </template>
         <template slot="start">
-            <b-navbar-item href="#">
+            <b-navbar-item tag="router-link"
+                to="/dashboard"
+                type="is-link">
                 Home
             </b-navbar-item>
-            <b-navbar-item href="#">
-                Documentation
+            <b-navbar-item tag="router-link"
+                to="/dashboard/stats"
+                type="is-link" v-if="checkRole == 'admin'">
+                Stats
             </b-navbar-item>
-            <b-navbar-dropdown label="Info">
+            <!-- <b-navbar-dropdown label="Info">
                 <b-navbar-item href="#">
                     About
                 </b-navbar-item>
                 <b-navbar-item href="#">
                     Contact
                 </b-navbar-item>
-            </b-navbar-dropdown>
+            </b-navbar-dropdown> -->
         </template>
 
         <template slot="end">
@@ -43,6 +47,11 @@ export default {
   methods: {
     route() {
       this.$router.push({ path: '/dashboard/create' })
+    }
+  },
+  computed: {
+    checkRole() {
+      return this.$store.state.role
     }
   }
 }

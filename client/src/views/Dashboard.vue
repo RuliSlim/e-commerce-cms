@@ -1,62 +1,64 @@
 <template>
-    <section class="container">
-        <router-view />
-        <b-button type="is-success" class="is-left" outlined @click="showAdd" v-html="html"
-        >Add Product</b-button>
-        <b-table
-            :data="data"
-            :paginated="isPaginated"
-            :per-page="perPage"
-            :current-page.sync="currentPage"
-            :pagination-simple="isPaginationSimple"
-            :pagination-position="paginationPosition"
-            :default-sort-direction="defaultSortDirection"
-            :sort-icon="sortIcon"
-            :sort-icon-size="sortIconSize"
-            default-sort="id"
-            aria-next-label="Next page"
-            aria-previous-label="Previous page"
-            aria-page-label="Page"
-            aria-current-label="Current page"
-            >
+    <section class="">
+        <router-view class="gap"/>
+        <div class="container">
+            <b-button type="is-success" class="is-left" outlined @click="showAdd" v-html="html"
+                    >Add Product</b-button>
+            <b-table
+                :data="data"
+                :paginated="isPaginated"
+                :per-page="perPage"
+                :current-page.sync="currentPage"
+                :pagination-simple="isPaginationSimple"
+                :pagination-position="paginationPosition"
+                :default-sort-direction="defaultSortDirection"
+                :sort-icon="sortIcon"
+                :sort-icon-size="sortIconSize"
+                default-sort="id"
+                aria-next-label="Next page"
+                aria-previous-label="Previous page"
+                aria-page-label="Page"
+                aria-current-label="Current page"
+                >
 
-            <template slot-scope="props" label="Selected">
-                <b-table-column field="id" label="ID" width="40" sortable numeric>
-                    {{ props.row.id }}
-                </b-table-column>
+                <template slot-scope="props" label="Selected">
+                    <b-table-column field="id" label="ID" width="40" sortable numeric>
+                        {{ props.row.id }}
+                    </b-table-column>
 
-                <b-table-column field="name" label="Name" sortable>
-                    <router-link :to="`/dashboard/product/${props.row.id}`">
-                        <!-- <b-button rounded @click="test">Edit</b-button> -->
-                        {{ props.row.name }}
-                    </router-link>
-                </b-table-column>
+                    <b-table-column field="name" label="Name" sortable>
+                        <router-link :to="`/dashboard/product/${props.row.id}`">
+                            <!-- <b-button rounded @click="test">Edit</b-button> -->
+                            {{ props.row.name }}
+                        </router-link>
+                    </b-table-column>
 
-                <b-table-column field="price" label="Price" sortable numeric >
-                    {{ props.row.price }}
-                </b-table-column>
+                    <b-table-column field="price" label="Price" sortable numeric >
+                        {{ props.row.price }}
+                    </b-table-column>
 
-                <b-table-column field="stock" label="Stock" sortable numeric>
-                    {{ props.row.stock }}
-                </b-table-column>
+                    <b-table-column field="stock" label="Stock" sortable numeric>
+                        {{ props.row.stock }}
+                    </b-table-column>
 
-                <b-table-column field="createdAt" label="Date" sortable>
-                    <span class="tag is-success">
-                        {{ new Date(props.row.createdAt).toLocaleDateString() }}
-                    </span>
-                </b-table-column>
+                    <b-table-column field="createdAt" label="Date" sortable>
+                        <span class="tag is-success">
+                            {{ props.row.createdAt | formatDate }}
+                        </span>
+                    </b-table-column>
 
-                <b-table-column field="option" label="Options" sortable numeric>
-                    <router-link :to="`/dashboard/product/${props.row.id}/edit`">
-                        <b-button rounded >Edit</b-button>
-                    </router-link>
-                    <router-link :to="`/dashboard/product/${props.row.id}/delete`">
-                        <b-button rounded >Delete</b-button>
-                    </router-link>
-                </b-table-column>
-            </template>
-            
-        </b-table>
+                    <b-table-column field="option" label="Options" sortable numeric>
+                        <router-link :to="`/dashboard/product/${props.row.id}/edit`">
+                            <b-button rounded >Edit</b-button>
+                        </router-link>
+                        <router-link :to="`/dashboard/product/${props.row.id}/delete`">
+                            <b-button rounded >Delete</b-button>
+                        </router-link>
+                    </b-table-column>
+                </template>
+                
+            </b-table>
+        </div>
         <!-- <router-view> -->
     </section>
 </template>
@@ -75,7 +77,6 @@
                 sortIconSize: 'is-small',
                 currentPage: 1,
                 perPage: 10,
-                // url: 'http://localhost:3000/products',
                 isShowAdd: false,
                 html: 'Add Product',
                 selected: null
@@ -87,6 +88,14 @@
             },
             router() {
                 return this.$route
+            },
+            role() {
+                return this.$store.state.role
+            }
+        },
+        watch: {
+            role() {
+                this.data
             }
         },
         methods: {
@@ -111,5 +120,9 @@
 <style scoped>
     .is-left {
         float: left;
+    }
+    .gap {
+        /* margin-top: 10%; */
+        margin-bottom: 10%;
     }
 </style>

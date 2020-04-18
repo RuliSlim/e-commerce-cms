@@ -2,69 +2,102 @@
   <div>
     <!-- ADD -->
     <section v-if="type == 'addProduct'">
-        <form @submit.prevent="addProduct">
-            <b-field label="Name"
-                message="This product name can not be empty">
-                <b-input v-model="name"></b-input>
-            </b-field>
+        <section class="hero is-primary top-title">
+          <div class="hero-body">
+            <h1 class="title">
+              Add Product
+            </h1>
+          </div>
+        </section>
+        <div class="container">
+          <form @submit.prevent="addProduct">
+              <b-field label="Name"
+                  message="This product name can not be empty">
+                  <b-input v-model="name"></b-input>
+              </b-field>
 
-            <b-field label="URL Image"
-                message="This image url can not be empty">
-                <b-input v-model="image"
-                    placeholder="URL" type="url"
-                    maxlength="30">
-                </b-input>
-            </b-field>
+              <b-field label="URL Image"
+                  message="This image url can not be empty">
+                  <b-input v-model="image"
+                      placeholder="URL" type="url"
+                      >
+                  </b-input>
+              </b-field>
 
-            <b-field label="Price"
-                >
-                <b-input v-model="price"
-                    type="number" step="any"></b-input>
-            </b-field>
+              <b-field label="Price"
+                  >
+                  <b-input v-model="price"
+                      type="number" step="any"></b-input>
+              </b-field>
 
-            <b-field label="Stock"
-                >
-                <b-input v-model="stock"
-                    type="number"></b-input>
-            </b-field>
+              <b-field label="Stock"
+                  >
+                  <b-input v-model="stock"
+                      type="number"></b-input>
+              </b-field>
 
-            <b-button tag="input" type="is-primary"
-            native-type="submit"
-            value="Submit input" />
-        </form>
+              <b-button tag="input" type="is-primary"
+              native-type="submit"
+              value="Submit input" />
+          </form>
+        </div>
     </section>
     <!-- EDIT -->
     <section v-else>
-        <form @submit.prevent="ediProduct">
-            <b-field label="Edit"
-                message="This product name can not be empty">
-                <b-input v-model="name"></b-input>
-            </b-field>
+      <section class="hero is-primary top-title">
+        <div class="hero-body" id="hero-body">
+          <div class="container">
+            <h1 class="title">
+              Edit
+            </h1>
+          </div>
+        </div>
+      </section>
+      <div class="container">
+        <form @submit.prevent="editProduct">
+          <b-field label="Name"
+              message="This product name can not be empty">
+              <b-input v-model="name"></b-input>
+          </b-field>
+          
+          <div class="columns">
+            <div class="column is-1">
+              <figure class="media-left">
+                <p class="image is-64x64">
+                  <img :src="image">
+                </p>
+              </figure>
+            </div>
+            <div class="column is-11">
+              <div class="content">
+                <b-field label="URL Image"
+                    message="This image url can not be empty">
+                    <b-input v-model="image"
+                        placeholder="URL" type="url"
+                        >
+                    </b-input>
+                </b-field>
+              </div>
+            </div>
+          </div>
 
-            <b-field label="URL Image"
-                message="This image url can not be empty">
-                <b-input v-model="image"
-                    placeholder="URL" type="url"
-                    maxlength="30">
-                </b-input>
-            </b-field>
+          <b-field label="Price"
+              >
+              <b-input v-model="price"
+                  type="number" step="any"></b-input>
+          </b-field>
 
-            <b-field label="Price"
-                >
-                <b-input v-model="price"
-                    type="number" step="any"></b-input>
-            </b-field>
+          <b-field label="Stock"
+              >
+              <b-input v-model="stock"
+                  type="number"></b-input>
+          </b-field>
 
-            <b-field label="Stock"
-                >
-                <b-input v-model="stock"
-                    type="number"></b-input>
-            </b-field>
-
-            <b-button tag="input" type="is-primary"
-            native-type="submit"
-            value="Submit input" />
+          <b-button tag="input" type="is-primary"
+          native-type="submit"
+          value="Submit input" />
         </form>
+      </div>
     </section>
   </div>
 </template>
@@ -98,7 +131,7 @@ export default {
         this.stock = null
         this.$router.push({path: '/dashboard'})
     },
-    ediProduct() {
+    editProduct() {
       let id = this.routerId
         let newProduct = {
             id: id,
@@ -123,13 +156,11 @@ export default {
     this.$store.dispatch('getProductById', this.routerId)
     let existingProduct = this.getData
     if(this.type == 'edit') {
-      alert('YO')
       this.name = existingProduct.name
       this.image = existingProduct.image
       this.price = existingProduct.price
       this.stock = existingProduct.stock
     }
-
   },
   beforeUpdate() {
     this.$store.dispatch('getProductById', this.routerId)
@@ -146,12 +177,23 @@ export default {
   watch: {
     routerId () {
       this.$store.dispatch('getProductById', this.routerId)
-      this.getData
+      let existingProduct = this.getData
+      if(this.type == 'edit') {
+        this.name = existingProduct.name
+        this.image = existingProduct.image
+        this.price = existingProduct.price
+        this.stock = existingProduct.stock
+      }
     }
   }
 }
 </script>
 
 <style>
-
+  section.hero.is-primary.top-title{
+    margin-top: -5.2% !important;
+  }
+  .body{
+    text-align: right !important;
+  }
 </style>

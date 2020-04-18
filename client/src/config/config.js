@@ -2,7 +2,7 @@ let config;
 
 if (process.env.NODE_ENV === "production") {
   config = {
-    $url: "https://kanban-alan.herokuapp.com",
+    $url: "",
   };
 } else {
   config = {

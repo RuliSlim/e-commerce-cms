@@ -20,6 +20,7 @@ module.exports = {
         name: 'userBiasa',
         email: 'email2@email.com',
         password: bcrypt.hashSync('password', salt),
+        role: 'customer',
         createdAt: new Date(),
         updatedAt: new Date()
       }

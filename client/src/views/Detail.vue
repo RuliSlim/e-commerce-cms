@@ -20,7 +20,7 @@
                 <p>Harga: </p>
               </div>
               <div class="column">
-                <p>Rp {{data.price}}</p>
+                <p>{{data.price | currency}}</p>
               </div>
             </div>
             <div class="columns">

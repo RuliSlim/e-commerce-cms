@@ -16,6 +16,7 @@ export default new Vuex.Store({
     user: null,
     products: [],
     product: {},
+    totalSales: 0
   },
   plugins: [createPersistedState()],
   mutations: {
@@ -30,11 +31,13 @@ export default new Vuex.Store({
       state.role = null;
       state.token = null;
       state.user = null;
-      state.products = [];
-      state.product = {};
     },
     SET_PRODUCTS: (state, payload) => {
       state.products = payload;
+      state.totalSales = 0;
+      state.products.forEach(el => {
+        state.totalSales += el.sold
+      })
     },
     ADD_PRODUCT: (state, payload) => {
       state.products.push(payload);
@@ -66,6 +69,7 @@ export default new Vuex.Store({
             login: true,
             user: res.data.user
           }
+          console.log(res.data)
           commit('SET_ISLOGIN', payload);
         })
         .catch(err => {
